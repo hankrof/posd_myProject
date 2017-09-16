@@ -1,6 +1,6 @@
 INC_DIR = include
 CC		= g++
-CFLAG   = -Wall -g3 -std=c++11
+CFLAG   = -Wall -g3 -std=gnu++0x
 
 all: hw1
 
