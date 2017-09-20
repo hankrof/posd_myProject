@@ -41,8 +41,7 @@ public:
     virtual double perimeter() const = 0;
     virtual double compactness() const
     {
-        //4 * pi * A(D) / p^2 
-        return (4.0 * M_PI) * area() / (perimeter() * perimeter()); 
+        return area() / perimeter(); 
     }
     virtual std::string toString() const = 0;
 

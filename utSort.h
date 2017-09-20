@@ -3,6 +3,9 @@
 #include "include/Shapes.h"
 #include "include/Media.h"
 #include "include/Sort.h"
+#include <iostream>
+using std::cout;
+using std::endl;
 TEST (Sort, sortByIncreasingPerimeter)
 {
     std::list<Shape *> shapeList;
@@ -125,13 +128,13 @@ TEST (Sort, sortByIncreasingCompactness)
 {
     std::list<Shape *> shapeList;
    
-    //Compactness = 4 * pi * Area / (perimeter ^ 2)
+    //Compactness = Area / Perimeter
     //
-    //Rectangle Compactness = (4 * 3.14159 * 5 * 5) / (20 ^ 2) = 0.78
+    //Rectangle Compactness = 5 * 5 / 20 = 0.8
     //Circle    Compactness =
-    //  (4 * 3.14159 * 3.14159 * 25) / (2 * 3.14159 * 5) ^2 = 1
-    //Triangle  Compactness = 0.54 
-    //            Compactness    0.54      0.78        1 
+    //          3.14159 * 25 / 2 * 3.14159 * 5 = 2.5
+    //Triangle  Compactness = 0.207
+    //            Compactness    0.207     0.8        2.5
     //The order should be like Triangle, Rectangle, Circle in increasing.
     
     Rectangle rect(0,0, 5, 5); 
