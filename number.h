@@ -7,11 +7,10 @@
 class Number : public Term
 {
 public:
-    Number(std::string s) 
-        : Term(s)
+    Number(int v) 
+        : Term(std::to_string(v))
     {
-        std::stringstream ss(s);
-        ss >> _value;
+        _value = v;
     }
     int value() const
     {
@@ -21,12 +20,11 @@ public:
     {
         return Term::match(term);
     }
-    bool match(Variable &var)
+    bool match(Var &var)
     {
         return var.match(*this);
     }
 private:
-    std::string const _symbol;
     int _value;
 };
 #endif
