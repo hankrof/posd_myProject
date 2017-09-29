@@ -1,6 +1,7 @@
 CC    = g++ 
 CFLAG = -g3 -std=gnu++14
 
+
 hw2: hw2.o
 ifeq (${OS}, Windows_NT)
 	${CC} ${CFLAG} -o hw2 hw2.o -lgtest
