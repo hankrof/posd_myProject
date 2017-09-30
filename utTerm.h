@@ -35,7 +35,7 @@ TEST (Number, matchFailureDiffConstant)
 {
     Atom tom("tom");
     Number x(25);
-    ASSERT_FALSE(tom.match(x));
+    ASSERT_FALSE(x.match(tom));
 }
 //?- 25=X.
 //true.
