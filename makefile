@@ -8,7 +8,7 @@ else
 	${CC} ${CFLAG} -o hw2 hw2.o -lgtest -lpthread
 endif
 
-hw2.o:hw2.cpp atom.h number.h utTerm.h variable.h
+hw2.o:hw2.cpp atom.h Number.h utTerm.h variable.h
 	${CC} ${CFLAG} -c hw2.cpp
 clean:
 ifeq (${OS}, Windows_NT)
