@@ -14,10 +14,6 @@ public:
     {
         return _value; 
     }
-    bool isConstant() const
-    {
-        return !_assignable;
-    }
     bool match(const Term &term)
     {
         bool ret = term.symbol() == _value ||
