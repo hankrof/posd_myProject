@@ -61,7 +61,7 @@ TEST (Atom, matchSuccessToVar)
 {
     Atom tom("tom");
     Var X("X");
-    tom.match(X);
+    ASSERT_TRUE(tom.match(X));
     ASSERT_EQ(X.value(),tom.symbol());
 }
 
