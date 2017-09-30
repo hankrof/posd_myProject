@@ -12,9 +12,9 @@ public:
     {
         _value = v;
     }
-    int value() const
+    std::string value() const
     {
-        return _value;
+        return symbol();
     }
     bool match(const Term &term)
     {
