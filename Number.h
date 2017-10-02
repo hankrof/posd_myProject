@@ -14,7 +14,7 @@ public:
     }
     std::string value() const
     {
-        return symbol();
+        return std::to_string(_value);
     }
     bool match(const Term &term)
     {
