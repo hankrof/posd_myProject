@@ -10,7 +10,7 @@ endif
 
 hw2.o:hw2.cpp atom.h Number.h utTerm.h variable.h
 	${CC} ${CFLAG} -c hw2.cpp
-clean:
+clean: 
 ifeq (${OS}, Windows_NT)
 	del hw2.exe *.o	
 else
