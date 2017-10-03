@@ -1,7 +1,7 @@
 #ifndef UTTERM_H
 #define UTTERM_H
 #include <gtest/gtest.h>
-#include "Number.h"
+#include "number.h"
 #include "atom.h"
 //test Number.value()
 TEST (Number,ctor)
