@@ -2,10 +2,10 @@
 #define VARIABLE_H
 #include <string>
 #include "term.h"
-class Var : public Term
+class Variable : public Term
 {
 public:
-    Var(std::string s)
+    Variable(std::string s)
         : Term(s) , _assignable(true)
     {
 

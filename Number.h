@@ -20,7 +20,7 @@ public:
     {
         return Term::match(term);
     }
-    bool match(Var &var)
+    bool match(Variable &var)
     {
         return var.match(*this);
     }
