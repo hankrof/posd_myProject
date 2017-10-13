@@ -3,7 +3,7 @@ CFLAG = -Wall -g3 -std=gnu++14
 
 hw3: hw3.o
 ifeq (${OS}, Windows_NT)
-	${CC} ${CFLAG} -o hw3 hw3.o -lgtest
+	${CC} ${CFLAG} -o hw3.exe hw3.o -lgtest
 else
 	${CC} ${CFLAG} -o hw3 hw3.o -lgtest -lpthread
 endif
