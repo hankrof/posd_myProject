@@ -2,29 +2,27 @@
 #define NUMBER_H_INCLUDED
 #include <string>
 #include <sstream>
+#include <iomanip>
 #include "term.h"
 #include "variable.h"
 class Number : public Term
 {
 public:
     Number(int v) 
-        : Term(std::to_string(v))
     {
-        _value = v;
+        _symbol = std::to_string(v);
     }
-    std::string value() const
+    Number(double v)
     {
-        return std::to_string(_value);
+        std::stringstream ss;
+        ss << v;
+        ss >> _symbol; 
     }
-    bool match(const Term &term)
+    std::string symbol() const
     {
-        return Term::match(term);
-    }
-    bool match(Variable &var)
-    {
-        return var.match(*this);
+        return _symbol;
     }
 private:
-    int _value;
+    std::string _symbol;
 };
 #endif

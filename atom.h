@@ -1,22 +1,19 @@
 #ifndef ATOM_H
 #define ATOM_H
-#include <string>
 #include "term.h"
-class Atom : public Term 
+class Atom : public Term
 {
 public:
-    Atom (std::string s) 
-        : Term(s) 
+    Atom (std::string s):
+        _symbol(s) 
     {
 
-    }
-    bool match(const Term &term)
+    }  
+    std::string symbol() const
     {
-        return Term::match(term);
+        return _symbol;
     }
-    bool match(Variable &var)
-    {
-        return var.match(*this);
-    }
+private:
+    std::string _symbol;
 };
 #endif
