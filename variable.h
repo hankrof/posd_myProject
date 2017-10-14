@@ -6,17 +6,13 @@ class Variable : public Term
 {
 public:
     Variable(std::string s) : 
-        _symbol(s), _instantiated(false)
+        _symbol(s), _value(s), _instantiated(false)
     {
         
     }
     std::string value() const
     { 
-        if(_instantiated)
-            return _value;
-        else if(_sharedlist.size() > 0)
-            return _sharedlist[0]->symbol();
-        return _symbol;
+        return _value;
     }
     std::string symbol() const
     {
@@ -27,6 +23,8 @@ public:
         Variable *var = dynamic_cast<Variable*>(&term);
         if(var)
         {
+            if(!_instantiated)
+                _value = var->_symbol;
             add_shared_var(var);
             if(var->_instantiated)
                 instantiate_shared_var(var->_value);
