@@ -14,6 +14,8 @@ public:
     { 
         if(_instantiated)
             return _value;
+        else if(_sharedlist.size() > 0)
+            return _sharedlist[0]->symbol();
         return _symbol;
     }
     std::string symbol() const
