@@ -29,6 +29,8 @@ public:
             if(var->_instantiated)
                 instantiate_shared_var(var->_value);
             var->add_shared_var(this);
+            if(_instantiated)
+                var->instantiate_shared_var(_value);
             return true;
         }
         else if(!_instantiated)

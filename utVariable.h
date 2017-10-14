@@ -11,12 +11,11 @@ TEST(Variable, constructor)
 
 TEST(Variable , matching)
 {
-    Atom tom("tom"), jerry("jerry");
+    Atom tom("tom"), jerry("jerry"), teddy("teddy");
     Variable X("X"), Y("Y");
     ASSERT_TRUE(X.match(tom));
-    ASSERT_EQ( "tom", X.value());
-    ASSERT_TRUE(jerry.match(Y));
-    ASSERT_EQ("jerry", Y.value());
+    ASSERT_TRUE(X.match(Y));
+    ASSERT_EQ("tom", Y.value());
 }
 TEST (Variable , haveValue)
 {
@@ -40,6 +39,7 @@ TEST(Variable , numE_to_varX)
 // ?- X=Y, X=1.
 // Y=1
 TEST (Variable, varY_to_varX_and_num1_to_varX) 
+
 {
     Number num1(1);
     Variable X("X"), Y("Y");    
