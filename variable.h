@@ -38,7 +38,7 @@ public:
             instantiate_shared_var(term.value());
             return true;
         }
-        return _symbol == term.symbol();
+        return _value == term.symbol();
     }
     std::string const _symbol;
 private:

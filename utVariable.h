@@ -16,6 +16,8 @@ TEST(Variable , matching)
     ASSERT_TRUE(X.match(tom));
     ASSERT_TRUE(X.match(Y));
     ASSERT_EQ("tom", Y.value());
+
+    ASSERT_TRUE(X.match(tom));
 }
 TEST (Variable , haveValue)
 {
