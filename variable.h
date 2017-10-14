@@ -6,13 +6,16 @@ class Variable : public Term
 {
 public:
     Variable(std::string s) : 
-        _symbol(s), _value(s), _instantiated(false)
+        _symbol(s), _value(this), _instantiated(false)
     {
         
     }
     std::string value() const
     { 
-        return _value;
+        Variable *var = dynamic_cast<Variable*>(_value);
+        if(var)
+            return var->_symbol;
+        return _value->value();
     }
     std::string symbol() const
     {
@@ -24,7 +27,7 @@ public:
         if(var)
         {
             if(!_instantiated)
-                _value = var->_symbol;
+                _value = var;
             add_shared_var(var);
             if(var->_instantiated)
                 instantiate_shared_var(var->_value);
@@ -35,10 +38,10 @@ public:
         }
         else if(!_instantiated)
         {
-            instantiate_shared_var(term.value());
+            instantiate_shared_var(&term);
             return true;
         }
-        return _value == term.symbol();
+        return _value->symbol() == term.symbol();
     }
     std::string const _symbol;
 private:
@@ -46,7 +49,7 @@ private:
     {
         _sharedlist.push_back(var);
     }
-    void instantiate_shared_var(std::string _nvalue)
+    void instantiate_shared_var(Term *_nvalue)
     {
         if(_instantiated)
             return;
@@ -58,7 +61,8 @@ private:
                 i->instantiate_shared_var(_value);
         }
     }
-    std::string _value;
+//  std::string _value;
+    Term * _value;
     std::vector<Variable*> _sharedlist;
     bool _instantiated;
 };
