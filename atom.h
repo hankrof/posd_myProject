@@ -1,6 +1,7 @@
 #ifndef ATOM_H
 #define ATOM_H
 #include "term.h"
+#include "variable.h"
 class Atom : public Term
 {
 public:
@@ -9,6 +10,13 @@ public:
     {
 
     }  
+    bool match(Term &term)
+    {
+        Variable *var = dynamic_cast<Variable*>(&term);
+        if(var)
+            return var->match(*this);
+        return _symbol == term.symbol();
+    }
     std::string symbol() const
     {
         return _symbol;

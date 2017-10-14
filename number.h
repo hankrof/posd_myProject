@@ -18,6 +18,13 @@ public:
         ss << v;
         ss >> _symbol; 
     }
+    bool match(Term &term)
+    {
+        Variable *var = dynamic_cast<Variable*>(&term);
+        if(var)
+            return var->match(*this);
+        return _symbol == term.symbol();
+    }
     std::string symbol() const
     {
         return _symbol;

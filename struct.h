@@ -47,6 +47,14 @@ public:
         sym_name += ')'; 
         return sym_name;
     }
+    bool match(Term &term)
+    {
+        Variable *var = dynamic_cast<Variable*>(&term);
+        if(var)
+            return var->match(*this);
+        return symbol() == term.symbol();
+    }
+ 
 private:
     Atom const _name;
     std::vector<Term *> _args;

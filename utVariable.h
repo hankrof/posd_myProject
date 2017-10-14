@@ -11,10 +11,13 @@ TEST(Variable, constructor)
 
 TEST(Variable , matching)
 {
-    Atom tom("tom");
-    Variable X("X");
+    Atom tom("tom"), jerry("jerry");
+    Variable X("X"), Y("Y");
+
     X.match(tom);
     ASSERT_EQ( "tom", X.value());
+    jerry.match(Y);
+    ASSERT_EQ("jerry", Y.value());
 }
 
 TEST (Variable , haveValue)

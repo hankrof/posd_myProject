@@ -26,6 +26,8 @@ public:
         if(var)
         {
             add_shared_var(var);
+            if(var->_instantiated)
+                instantiate_shared_var(var->_value);
             var->add_shared_var(this);
             return true;
         }
@@ -40,8 +42,6 @@ public:
 private:
     void add_shared_var(Variable *var)
     {
-        if(var->_instantiated)
-            instantiate_shared_var(var->_value);
         _sharedlist.push_back(var);
     }
     void instantiate_shared_var(std::string _nvalue)
