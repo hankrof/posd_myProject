@@ -27,7 +27,7 @@ public:
         if(var)
         {
             if(!_instantiated)
-                _value = var;
+                _value = var->_value;
             add_shared_var(var);
             if(var->_instantiated)
                 instantiate_shared_var(var->_value);
@@ -61,7 +61,6 @@ private:
                 i->instantiate_shared_var(_value);
         }
     }
-//  std::string _value;
     Term * _value;
     std::vector<Variable*> _sharedlist;
     bool _instantiated;
