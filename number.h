@@ -8,27 +8,10 @@
 class Number : public Term
 {
 public:
-    Number(int v) 
-    {
-        _symbol = std::to_string(v);
-    }
-    Number(double v)
-    {
-        std::stringstream ss;
-        ss << v;
-        ss >> _symbol; 
-    }
-    bool match(Term &term)
-    {
-        Variable *var = dynamic_cast<Variable*>(&term);
-        if(var)
-            return var->match(*this);
-        return _symbol == term.symbol();
-    }
-    std::string symbol() const
-    {
-        return _symbol;
-    }
+    Number(int v);
+    Number(double v);
+    bool match(Term &term);
+    std::string symbol() const;
 private:
     std::string _symbol;
 };

@@ -5,22 +5,9 @@
 class Atom : public Term
 {
 public:
-    Atom (std::string s):
-        _symbol(s) 
-    {
-
-    }  
-    bool match(Term &term)
-    {
-        Variable *var = dynamic_cast<Variable*>(&term);
-        if(var)
-            return var->match(*this);
-        return _symbol == term.symbol();
-    }
-    std::string symbol() const
-    {
-        return _symbol;
-    }
+    Atom (std::string s);
+    bool match(Term &term);
+    std::string symbol() const;
 private:
     std::string _symbol;
 };
