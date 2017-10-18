@@ -5,29 +5,26 @@
 
 TEST(Variable, constructor)
 {
-    Variable X("X");
-    ASSERT_EQ("X", X._symbol);
+  Variable X("X");
+  ASSERT_EQ("X", X._symbol);
 }
 
 TEST(Variable , matching)
 {
-    Atom tom("tom"), jerry("jerry"), teddy("teddy");
-    Variable X("X"), Y("Y");
-    ASSERT_TRUE(X.match(tom));
-    ASSERT_TRUE(X.match(Y));
-    ASSERT_EQ("tom", Y.value());
-
-    ASSERT_TRUE(X.match(tom));
+  Atom tom("tom");
+  Variable X("X");
+  X.match(tom);
+  ASSERT_EQ( "tom", X.value());
 }
+
 TEST (Variable , haveValue)
 {
-    Atom tom ("tom");
-    Atom jerry ("jerry");
-    Variable X("X");
-    ASSERT_TRUE(X.match(tom));
-    ASSERT_FALSE(X.match(jerry));
+  Atom tom ("tom");
+  Atom jerry ("jerry");
+  Variable X("X");
+  ASSERT_TRUE(X.match(tom));
+  ASSERT_FALSE(X.match(jerry));
 }
-
 // ?- X=2.7182.
 // X=2.7182
 TEST(Variable , numE_to_varX)
