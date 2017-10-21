@@ -30,6 +30,10 @@ bool Variable::match(Term &term)
             var->instantiate_shared_var(_value);
         return true;
     }
+    else if(checkInsideList(&term))
+    {
+        return false; 
+    }
     else if(!_instantiated)
     {
         instantiate_shared_var(&term);
@@ -53,4 +57,24 @@ void Variable::instantiate_shared_var(Term *_nvalue)
             i->instantiate_shared_var(_value);
     }
 }
-
+bool Variable::checkInsideList(Term const *term) const
+{
+    std::string temp  = term->symbol();
+    std::string value;
+    std::string token;
+    //remove []
+    temp = temp.substr(1, temp.size() - 2); 
+    //remove ' '
+    for(size_t i=0; i<temp.size(); i++)
+    {
+        if(temp[i] != ' ')
+           value += temp[i];
+    }
+    std::stringstream ss(value);
+    while(getline(ss, token, ','))
+    {
+        if(token == symbol())
+            return true;
+    }
+    return false;
+}

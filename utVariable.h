@@ -2,6 +2,7 @@
 #define UTVARIABLE_H
 #include "number.h"
 #include "variable.h"
+#include "struct.h"
 
 TEST(Variable, constructor)
 {

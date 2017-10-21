@@ -1,7 +1,9 @@
 #ifndef VARIABLE_H
 #define VARIABLE_H
 #include "atom.h"
+#include "list.h"
 #include <vector>
+#include <sstream>
 class Variable : public Term
 {
 public:
@@ -13,6 +15,7 @@ public:
 private:
     void add_shared_var(Variable *var);
     void instantiate_shared_var(Term *_nvalue);
+    bool checkInsideList(Term const *term) const;
     Term * _value;
     std::vector<Variable*> _sharedlist;
     bool _instantiated;
