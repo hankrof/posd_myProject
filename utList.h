@@ -2,6 +2,7 @@
 #define UTLIST_H
 
 #include <string>
+#include <exception>
 using std::string;
 
 #include "list.h"
@@ -235,7 +236,15 @@ TEST(List, headAndTailMatching4)
 // Then it should throw a string: "Accessing head in an empty list" as an exception.
 TEST (List, emptyExecptionOfHead) 
 {
-
+    List l;
+    try
+    {
+        l.head(); 
+    }
+    catch(std::string e)
+    {
+        ASSERT_EQ("Accessing head in an empty list", e);
+    }
 }
 
 
@@ -244,6 +253,14 @@ TEST (List, emptyExecptionOfHead)
 // Then it should throw a string: "Accessing tail in an empty list" as an exception.
 TEST (List, emptyExecptionOfTail) 
 {
-
+    List l;
+    try
+    {
+        l.tail(); 
+    }
+    catch(std::string e)
+    {
+        ASSERT_EQ("Accessing tail in an empty list", e);
+    }
 }
 #endif

@@ -14,7 +14,7 @@ class List : public Term
 public:
     List();
     List(vector<Term *> const & elements);
-    Term* head() const;
+    Term* head() const; 
     List* tail() const;
     std::string symbol() const;
     std::string value() const;

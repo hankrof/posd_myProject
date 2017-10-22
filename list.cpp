@@ -1,6 +1,6 @@
 #include "list.h"
-List::List() :
-    _elements() 
+List::List()
+    : _elements() 
 {
 
 }
@@ -11,12 +11,20 @@ List::List(vector<Term*> const &elements)
 }
 Term* List::head() const
 {
-    return _elements.empty() ? nullptr : _elements[0];
+    if(_elements.empty())
+        throw std::string("Accessing head in an empty list");
+    else
+        return _elements[0];
 }
 List* List::tail() const
 {
-    std::vector<Term*> v(_elements.begin() + 1, _elements.end());
-    return new List(v);
+    if(_elements.empty())
+        throw std::string("Accessing tail in an empty list");
+    else
+    {
+        std::vector<Term*> v(_elements.begin() + 1, _elements.end());
+        return new List(v);
+    }
 }
 std::string List::value() const
 {
@@ -68,8 +76,8 @@ bool List::matchListDiffVar(List *list)
         var1 = dynamic_cast<Variable*>(_elements[i]);
         var2 = dynamic_cast<Variable*>(list->_elements[i]);
         if(var1 && var2 &&
-           !(var1->symbol() == var1->value() &&
-             var2->symbol() == var2->value()))
+                !(var1->symbol() == var1->value() &&
+                    var2->symbol() == var2->value()))
         {
             return false;
         }
