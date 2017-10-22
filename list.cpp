@@ -75,7 +75,7 @@ bool List::matchListDiffVar(List *list)
         }
         else if(var1 == nullptr && var2)
         {
-            bool ret = var1->match(*list->_elements[i]);
+            bool ret = var2->match(*list->_elements[i]);
             if(!ret)
                 return false;
         }

@@ -155,6 +155,7 @@ TEST(List, matchToVarToAtominListShouldSucceed)
     std::vector<Term*> v2 = {&num1, &num2, &a};
     List list1(v1), list2(v2);
     ASSERT_TRUE(list1.match(list2));
+    ASSERT_TRUE(list2.match(list1));
     ASSERT_EQ("8128", X.value());
 }
 
