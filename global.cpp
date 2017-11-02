@@ -31,7 +31,6 @@ bool symbolExist(std::string s, int & val)
                 {
                     return ele.first == s;
                 });
-
     found = symtable.end() != it;
     if (found)
         val = it - symtable.begin();
