@@ -8,7 +8,7 @@ else
 	${CC} ${CFLAG} -o hw5 hw5.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o -lgtest -lpthread
 endif
 
-hw5.o:hw5.cpp utList.h
+hw5.o:hw5.cpp utParser.h utScanner.h
 	${CC} ${CFLAG} -c hw5.cpp
 term.o:term.h term.cpp
 	${CC} ${CFLAG} -c term.cpp

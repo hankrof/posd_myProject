@@ -40,19 +40,20 @@ TEST_F(ParserTest, createTerm_Atom)
 
 TEST_F(ParserTest, createArgs)
 {
-    Scanner scanner("1, X, tom");
+    Scanner scanner("1, X, tom, s(1, 2)");
     Parser parser(scanner);
     vector<Term*> terms = parser.getArgs();
     ASSERT_EQ("1", terms[0]->symbol());
     ASSERT_EQ("X", terms[1]->symbol());
     ASSERT_EQ("tom", terms[2]->symbol());
+    ASSERT_EQ("s(1, 2)", terms[3]->symbol());
 }
 
 TEST_F(ParserTest, createTermsk)
 {
-    Scanner scanner("s(1, X, tom)");
+    Scanner scanner("s(1, X, a(tom))");
     Parser parser(scanner);
-    ASSERT_EQ("s(1, X, tom)", parser.createTerm()->symbol());
+    ASSERT_EQ("s(1, X, a(tom))", parser.createTerm()->symbol());
 }
 
 
@@ -61,7 +62,11 @@ TEST_F(ParserTest, createTermsk)
 // Then it should return two terms, one is "12345", another is "tom".
 TEST_F(ParserTest, listOfTermsTwo) 
 {
-
+    Scanner scanner("12345,    tom");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    ASSERT_EQ("12345", terms[0]->symbol());
+    ASSERT_EQ("tom",   terms[1]->symbol());
 }
 
 
@@ -71,7 +76,11 @@ TEST_F(ParserTest, listOfTermsTwo)
 // And #symbol() of Strcut should return "point(1, X, z(1,2,3))".
 TEST_F(ParserTest, parseStructOfStruct) 
 {
-
+    Scanner scanner("point(1, X, z(1, 2, 3))");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    Struct *s = dynamic_cast<Struct*>(terms[0]);
+    ASSERT_EQ("point(1, X, z(1, 2, 3))", s->symbol());
 }
 
 
@@ -80,7 +89,11 @@ TEST_F(ParserTest, parseStructOfStruct)
 // Then it should return two terms, one is "12345", another is "67".
 TEST_F(ParserTest, listOfTermsTwoNumbers) 
 {
-
+    Scanner scanner("12345,    67");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    ASSERT_EQ("12345", terms[0]->symbol());
+    ASSERT_EQ("67",   terms[1]->symbol());
 }
 
 
@@ -90,7 +103,11 @@ TEST_F(ParserTest, listOfTermsTwoNumbers)
 // And #symbol() of Strcut should return "point(1, X, z)".
 TEST_F(ParserTest, parseStructThreeArgs) 
 {
-
+    Scanner scanner("point(1, X, z)");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    Struct *s = dynamic_cast<Struct*>(terms[0]);
+    ASSERT_EQ("point(1, X, z)", s->symbol());
 }
 
 
@@ -100,7 +117,11 @@ TEST_F(ParserTest, parseStructThreeArgs)
 // And #symbol() of List should return "[]".
 TEST_F(ParserTest, parseListEmpty) 
 {
-
+    Scanner scanner("     [     ]");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    List *l = dynamic_cast<List*>(terms[0]);
+    ASSERT_EQ("[]", l->symbol());
 }
 
 
@@ -110,7 +131,11 @@ TEST_F(ParserTest, parseListEmpty)
 // And #symbol() of Variable should return "_date".
 TEST_F(ParserTest, parseVar) 
 {
-
+    Scanner scanner("_date");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    Variable *var = dynamic_cast<Variable*>(terms[0]);
+    ASSERT_EQ("_date", var->symbol());
 }
 
 
@@ -119,7 +144,10 @@ TEST_F(ParserTest, parseVar)
 // Then it should return nothing.
 TEST_F(ParserTest, listOfTermsEmpty) 
 {
-
+    Scanner scanner("");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    ASSERT_EQ(0, terms.size());
 }
 
 
@@ -129,7 +157,11 @@ TEST_F(ParserTest, listOfTermsEmpty)
 // And #symbol() of Strcut should return "s(s(s(s(1))))".
 TEST_F(ParserTest, parseStructOfStructAllTheWay) 
 {
-
+    Scanner scanner("s(s(s(s(1))))");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    Struct *s = dynamic_cast<Struct*>(terms[0]);
+    ASSERT_EQ("s(s(s(s(1))))", s->symbol());
 }
 
 
@@ -139,7 +171,11 @@ TEST_F(ParserTest, parseStructOfStructAllTheWay)
 // And #symbol() of List should return "[[1], []]".
 TEST_F(ParserTest, parseListOfLists) 
 {
-
+    Scanner scanner("     [    [1], [] ]");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    List *l = dynamic_cast<List*>(terms[0]);
+    ASSERT_EQ("[[1], []]", l->symbol());
 }
 
 
@@ -149,7 +185,11 @@ TEST_F(ParserTest, parseListOfLists)
 // And #symbol() of List should return "[[1], [], s(s(1))]".
 TEST_F(ParserTest, parseListOfListsAndStruct) 
 {
-
+    Scanner scanner("     [    [1], [], s(s(1)) ]     ");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    List *l = dynamic_cast<List*>(terms[0]);
+    ASSERT_EQ("[[1], [], s(s(1))]", l->symbol());
 }
 
 // Given there is string: "     [1, 2]" in scanner.
@@ -158,7 +198,11 @@ TEST_F(ParserTest, parseListOfListsAndStruct)
 // And #symbol() of List should return "[1, 2]".
 TEST_F(ParserTest, parseList) 
 {
-
+    Scanner scanner("     [1, 2]");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    List *l = dynamic_cast<List*>(terms[0]);
+    ASSERT_EQ("[1, 2]", l->symbol());
 }
 
 // Given there is string: "[1,2)" in scanner.
@@ -166,7 +210,16 @@ TEST_F(ParserTest, parseList)
 // Then it should return a string: "unexpected token" as exception.
 TEST_F(ParserTest, illegal1) 
 {
-
+    Scanner scanner("[1, 2)");
+    Parser parser(scanner);
+    try
+    {
+        vector<Term*> terms = parser.getArgs();
+    }
+    catch(std::string e)
+    {
+        ASSERT_EQ("unexpected token", e);
+    }
 }
 
 // Given there is string: ".(1,[])" in scanner.
@@ -177,7 +230,14 @@ TEST_F(ParserTest, illegal1)
 // And the first term should be number: "1", the second term should be another Strcut: "[]".
 TEST_F(ParserTest, ListAsStruct) 
 {
-
+    Scanner scanner(".(1,[])");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    Struct *s = dynamic_cast<Struct*>(terms[0]);
+    ASSERT_EQ(2, s->arity());
+    ASSERT_EQ(".(1, [])", s->symbol());
+    ASSERT_EQ("1", s->args(0)->symbol());
+    ASSERT_EQ("[]", s->args(1)->symbol());
 }
 
 
@@ -189,7 +249,14 @@ TEST_F(ParserTest, ListAsStruct)
 // And the first term should be number: "2", the second term should be another Strcut: ".(1, [])".
 TEST_F(ParserTest, ListAsStruct2) 
 {
-
+    Scanner scanner(".(2,.(1,[]))");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    Struct *s = dynamic_cast<Struct*>(terms[0]);
+    ASSERT_EQ(2, s->arity());
+    ASSERT_EQ(".(2, .(1, []))", s->symbol());
+    ASSERT_EQ("2", s->args(0)->symbol());
+    ASSERT_EQ(".(1, [])", s->args(1)->symbol());
 }
 
 
@@ -200,7 +267,14 @@ TEST_F(ParserTest, ListAsStruct2)
 // And #symbol() of the second Strcut should return "b(1, 2, 3)".
 TEST_F(ParserTest, parseStructOfStructAllTheWay2) 
 {
+    Scanner scanner("s(s(s(s(1)))), b(1,2,3)");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    Struct *s1 = dynamic_cast<Struct*>(terms[0]);
+    Struct *s2 = dynamic_cast<Struct*>(terms[1]);
 
+    ASSERT_EQ("s(s(s(s(1))))",  s1->symbol());
+    ASSERT_EQ("b(1, 2, 3)", s2->symbol());
 }
 
 
@@ -210,7 +284,11 @@ TEST_F(ParserTest, parseStructOfStructAllTheWay2)
 // And #symbol() of Strcut should return "point()".
 TEST_F(ParserTest, parseStructNoArg) 
 {
-
+    Scanner scanner("point()");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    Struct *s = dynamic_cast<Struct*>(terms[0]);
+    ASSERT_EQ("point()", s->symbol());
 }
 
 
@@ -219,7 +297,13 @@ TEST_F(ParserTest, parseStructNoArg)
 // Then it should return three terms: "12345", "tom" and "Date".
 TEST_F(ParserTest, listOfTermsThree) 
 {
-
+    Scanner scanner(" 12345,    tom,     Date");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    ASSERT_EQ(3, terms.size());
+    ASSERT_EQ("12345", terms[0]->symbol());
+    ASSERT_EQ("tom",   terms[1]->symbol());
+    ASSERT_EQ("Date",  terms[2]->symbol());
 }
 
 
@@ -229,7 +313,11 @@ TEST_F(ParserTest, listOfTermsThree)
 // And #symbol() of Strcut should return "point(11, 12)".
 TEST_F(ParserTest, parseStructTwoArgs) 
 {
-
+    Scanner scanner("point(11,12)");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    Struct *s = dynamic_cast<Struct*>(terms[0]);
+    ASSERT_EQ("point(11, 12)", s->symbol());
 }
 
 
@@ -239,7 +327,11 @@ TEST_F(ParserTest, parseStructTwoArgs)
 // And #symbol() of Strcut should return "...(11, 12)".
 TEST_F(ParserTest, parseStructDOTSTwoArgs) 
 {
-
+    Scanner scanner("...(11,12)");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    Struct *s = dynamic_cast<Struct*>(terms[0]);
+    ASSERT_EQ("...(11, 12)", s->symbol());
 }
 
 
@@ -249,7 +341,11 @@ TEST_F(ParserTest, parseStructDOTSTwoArgs)
 // And #symbol() of Strcut should return "point(11)".
 TEST_F(ParserTest, parseStructOneArg) 
 {
-
+    Scanner scanner("point(11)");
+    Parser parser(scanner);
+    vector<Term*> terms = parser.getArgs();
+    Struct *s = dynamic_cast<Struct*>(terms[0]);
+    ASSERT_EQ("point(11)", s->symbol());
 }
 
 #endif

@@ -2,23 +2,23 @@
 std::vector<std::pair<std::string, int>> symtable;
 bool isSpecialCh(char c)
 {
-    return c == '+'
-        // || c == '=' // ... the matching operator
-        || c == '-'
-        || c == '*'
-        || c == '/'
-        || c == '<'
-        || c == '>'
-        || c == '.'
-        || c == '&'
-        || c == '\\'
-        || c == '~'
-        || c == '^'
-        || c == '$'
-        || c == '#'
-        || c == '@'
-        || c == '?'
-        || c == ':';
+  return c == '+'
+      // || c == '=' // ... the matching operator
+         || c == '-'
+         || c == '*'
+         || c == '/'
+         || c == '<'
+         || c == '>'
+         || c == '.'
+         || c == '&'
+         || c == '\\'
+         || c == '~'
+         || c == '^'
+         || c == '$'
+         || c == '#'
+         || c == '@'
+         || c == '?'
+         || c == ':';
 }
 
 bool symbolExist(std::string s, int & val)
@@ -38,3 +38,11 @@ bool symbolExist(std::string s, int & val)
     return found;
 }
 
+
+void printSymbolTable()
+{
+    for(size_t i=0;i<symtable.size();i++)
+    {
+        printf("[%zd] -> %s, %d\n", i, symtable[i].first.c_str(), symtable[i].second);
+    }
+}

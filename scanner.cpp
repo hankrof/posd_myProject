@@ -51,12 +51,18 @@ int Scanner::tokenValue() const
 
 int Scanner::skipLeadingWhiteSpace()
 {
-    for (; (buffer[pos] == ' ' || buffer[pos] == '\t') && pos < buffer.length(); ++pos);
+    for (; (buffer[pos] == ' ' || buffer[pos] == '\t') && pos < static_cast<int>(buffer.length()); ++pos);
     return position();
 }
 
 int Scanner::position() const
 {
+    return pos;
+}
+
+int Scanner::rewind(int offset)
+{
+    pos -= offset;
     return pos;
 }
 

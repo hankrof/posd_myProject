@@ -8,6 +8,10 @@ Term * Struct::args(int index)
 {
     return _args[index];
 }
+int Struct::arity() const
+{
+    return _args.size();
+}
 Atom const& Struct::name() const
 {
     return _name;
@@ -15,6 +19,8 @@ Atom const& Struct::name() const
 std::string Struct::value() const
 {
     std::string sym_name(_name.symbol());
+    if(_args.empty())
+        return sym_name + "()";
     sym_name += '(';
     for(size_t i=0;i<_args.size()-1;i++)
     {
@@ -28,6 +34,8 @@ std::string Struct::value() const
 std::string Struct::symbol() const
 {
     std::string sym_name(_name.symbol());
+    if(_args.empty())
+        return sym_name + "()";
     sym_name += '(';
     for(size_t i=0;i<_args.size()-1;i++)
     {

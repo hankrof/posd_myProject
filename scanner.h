@@ -14,6 +14,7 @@ public:
     int tokenValue() const;
     int skipLeadingWhiteSpace();
     int position() const;
+    int rewind(int offset);
     char currentChar();
     int extractNumber();
     std::string extractAtom();
