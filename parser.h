@@ -11,7 +11,7 @@
 class Parser
 {
 public:
-    Parser(Scanner scanner);
+    Parser(Scanner const &scanner);
     Term* createTerm();
     std::vector<Term*> getArgs();
 private:
