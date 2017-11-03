@@ -144,7 +144,7 @@ TEST_F(ParserTest, parseVar)
 // Then it should return nothing.
 TEST_F(ParserTest, listOfTermsEmpty) 
 {
-    Scanner scanner("");
+    Scanner scanner;
     Parser parser(scanner);
     vector<Term*> terms = parser.getArgs();
     ASSERT_EQ(0, terms.size());

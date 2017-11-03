@@ -1,5 +1,5 @@
 #include "parser.h"
-Parser::Parser(Scanner &scanner)
+Parser::Parser(Scanner const& scanner)
     : _scanner(scanner), _currentToken(NONE) 
 {
 
