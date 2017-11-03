@@ -2,7 +2,6 @@ CC    = g++
 CFLAG = -Wall -g3 -std=gnu++14
 
 hw5: hw5.o term.o atom.o number.o struct.o variable.o number.o list.o global.o parser.o scanner.o 
-
 ifeq (${OS}, Windows_NT)
 	${CC} ${CFLAG} -o hw5.exe hw5.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o -lgtest
 else
