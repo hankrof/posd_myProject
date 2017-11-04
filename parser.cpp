@@ -22,10 +22,6 @@ Term* Parser::createTerm()
         {
             vector<Term*> terms;
             terms = getArgs();
-//          if(!terms.empty() && _currentToken == ')')
-//              return new Struct(*atom, terms);
-//          else if(terms.empty())
-//              return new Struct(*atom, terms);
             if(terms.empty() || _currentToken == ')')
                 return new Struct(*atom, terms);
             else
@@ -39,10 +35,6 @@ Term* Parser::createTerm()
     {
         vector<Term*> terms;
         terms = getArgs();
-//      if(!terms.empty() && _currentToken == ']')
-//          return new List(terms);
-//      else if(terms.empty())
-//          return new List(terms);
         if(terms.empty() || _currentToken == ']')
             return new List(terms);
         else
