@@ -31,8 +31,12 @@ parser.o: parser.h parser.cpp
 	${CC} ${CFLAG} -c parser.cpp
 clean:
 ifeq (${OS}, Windows_NT)
+ifneq ("$(wildcard hw5.exe)","") 
 	del hw5.exe *.o	
+endif
 else
-	rm hw5 *.o
+ifneq ("$(wildcard hw5)","") 
+	rm hw5 *.o	
+endif
 endif
 

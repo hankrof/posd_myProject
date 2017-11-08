@@ -62,7 +62,7 @@ TEST_F(ParserTest, createTermsk)
 // Then it should return two terms, one is "12345", another is "tom".
 TEST_F(ParserTest, listOfTermsTwo) 
 {
-    Scanner scanner("12345,    tom");
+    Scanner scanner(" 12345,    tom");
     Parser parser(scanner);
     vector<Term*> terms = parser.getArgs();
     ASSERT_EQ("12345", terms[0]->symbol());
@@ -76,7 +76,7 @@ TEST_F(ParserTest, listOfTermsTwo)
 // And #symbol() of Strcut should return "point(1, X, z(1,2,3))".
 TEST_F(ParserTest, parseStructOfStruct) 
 {
-    Scanner scanner("point(1, X, z(1, 2, 3))");
+    Scanner scanner("point(1, X, z(1,2,3))");
     Parser parser(scanner);
     vector<Term*> terms = parser.getArgs();
     Struct *s = dynamic_cast<Struct*>(terms[0]);
@@ -89,7 +89,7 @@ TEST_F(ParserTest, parseStructOfStruct)
 // Then it should return two terms, one is "12345", another is "67".
 TEST_F(ParserTest, listOfTermsTwoNumbers) 
 {
-    Scanner scanner("12345,    67");
+    Scanner scanner(" 12345,    67");
     Parser parser(scanner);
     vector<Term*> terms = parser.getArgs();
     ASSERT_EQ("12345", terms[0]->symbol());
