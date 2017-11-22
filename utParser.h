@@ -97,7 +97,11 @@ TEST_F(ParserTest,ListOfTermsEmpty)
 TEST_F(ParserTest, createTerm_underscoredVar)
 
 {
+<<<<<<< HEAD
     Scanner scanner("_date");
+=======
+    Scanner scanner(" 12345,    tom");
+>>>>>>> ff6f5dda5720ea126ebe9369d644ce9b732c89ca
     Parser parser(scanner);
     ASSERT_EQ("_date", parser.createTerm()->symbol());
 }
@@ -105,7 +109,11 @@ TEST_F(ParserTest, createTerm_underscoredVar)
 TEST_F(ParserTest,listofTermsTwoNumber)
 
 {
+<<<<<<< HEAD
     Scanner scanner("12345 , 68");
+=======
+    Scanner scanner("point(1, X, z(1,2,3))");
+>>>>>>> ff6f5dda5720ea126ebe9369d644ce9b732c89ca
     Parser parser(scanner);
     parser.createTerms();
     vector<Term*> terms = parser.getTerms();
@@ -115,7 +123,11 @@ TEST_F(ParserTest,listofTermsTwoNumber)
 
 TEST_F(ParserTest, createTerm_StructWithoutArgs) 
 {
+<<<<<<< HEAD
     Scanner scanner("point()");
+=======
+    Scanner scanner(" 12345,    67");
+>>>>>>> ff6f5dda5720ea126ebe9369d644ce9b732c89ca
     Parser parser(scanner);
     EXPECT_EQ("point()",parser.createTerm()->symbol());
 }

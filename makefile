@@ -33,8 +33,18 @@ node.o: node.h node.cpp
 	${CC} ${CFLAG} -c node.cpp
 clean:
 ifeq (${OS}, Windows_NT)
+<<<<<<< HEAD
 	del hw6.exe *.o	
 else
 	rm hw6 *.o
+=======
+ifneq ("$(wildcard hw5.exe)","") 
+	del hw5.exe *.o	
+endif
+else
+ifneq ("$(wildcard hw5)","") 
+	rm hw5 *.o	
+endif
+>>>>>>> ff6f5dda5720ea126ebe9369d644ce9b732c89ca
 endif
 
