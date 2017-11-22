@@ -62,28 +62,17 @@ void Parser::matchings()
     _nodes.clear();
     while((term = createTerm()))
     {
-        int c = _scanner.currentChar();
         _terms.push_back(term);
-        _nodes.push_back(new Node(TERM, term, nullptr, nullptr));
-        if(c == '.')
+
+        if(_scanner.currentChar() == '.')
         {
             break;
         }
-        else if(c == ',' ||  c == '=' ||  c == ';')
+        else if(_scanner.currentChar() == ',' ||
+           _scanner.currentChar() == '=' ||
+           _scanner.currentChar() == ';')
         {
-            switch(c)
-            {
-            case ',':
-                node = new Node(COMMA);
-                break;
-            case '=':
-                node = new Node(EQUALITY);
-                break;
-            case ';':
-                node = new Node(SEMICOLON);
-                break;
-            }
-            _nodes.push_back(node);
+
             _scanner.nextToken();
         }
     }
@@ -91,77 +80,7 @@ void Parser::matchings()
 
 Node* Parser::expressionTree()
 {
-    //        0      1         2     3
-    //SEMICOLON, COMMA, EQUALITY, TERM
-    int priority[] = {2, 3, 4}; 
-    Node *node;
-    std::vector<Node*> postfix;
-    std::stack<Node*> stk;
-    for(size_t i=0; i<_nodes.size(); i++)
-    {
-        node = _nodes[i]; 
-        if(node->payload == TERM)
-            postfix.push_back(node);
-        else //For future, if there adds the new operator. Use icp & isp
-        {
-            while(!stk.empty() && 
-                  priority[stk.top()->payload] >= priority[node->payload])
-            {
-                postfix.push_back(stk.top());
-                stk.pop();
-            }
-            stk.push(node);
-        }
-    }
-
-    while(!stk.empty())
-    {
-        postfix.push_back(stk.top());
-        stk.pop();
-    }
- 
-    int payload;
-    for(size_t i=0; i<postfix.size(); i++)
-    {
-        node    = postfix[i]; 
-        payload = node->payload;
-        if(payload == EQUALITY)
-        {
-            Node *n1, *n2; 
-            n1 = stk.top();
-            stk.pop();
-            n2 = stk.top();
-            stk.pop();
-
-            node->left  = n2;
-            node->right = n1;
-            n2->term->match(*n1->term);
-
-            stk.push(node);
-        }
-        else if(payload == COMMA)
-        {
-            Node *n1, *n2; 
-            n1 = stk.top();
-            stk.pop();
-            n2 = stk.top();
-            stk.pop();
-
-            node->left  = n2;
-            node->right = n1;
- 
-            stk.push(node);
-        }
-        else if(payload == TERM)
-        {
-            stk.push(node);
-        }
-    }
-
-    _exprRoot = stk.top();
-    stk.pop();
-
-    return _nodes.size() ? _exprRoot : nullptr;
+    return _exprRoot;
 }
 
 Term* Parser::list() 

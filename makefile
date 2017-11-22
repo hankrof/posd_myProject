@@ -1,16 +1,16 @@
 CC    = g++ 
 CFLAG = -Wall -g3 -std=gnu++14
 
-hw5: hw5.o term.o atom.o number.o struct.o variable.o number.o list.o global.o parser.o scanner.o 
+hw6: hw6.o term.o atom.o number.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o
 
 ifeq (${OS}, Windows_NT)
-	${CC} ${CFLAG} -o hw5.exe hw5.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o -lgtest
+	${CC} ${CFLAG} -o hw6.exe hw6.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o -lgtest
 else
-	${CC} ${CFLAG} -o hw5 hw5.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o -lgtest -lpthread
+	${CC} ${CFLAG} -o hw6 hw6.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o -lgtest -lpthread
 endif
 
-hw5.o:hw5.cpp utParser.h utScanner.h
-	${CC} ${CFLAG} -c hw5.cpp
+hw6.o:hw6.cpp utParser.h
+	${CC} ${CFLAG} -c hw6.cpp
 term.o:term.h term.cpp
 	${CC} ${CFLAG} -c term.cpp
 atom.o:atom.h atom.cpp
@@ -29,10 +29,12 @@ scanner.o: scanner.h scanner.cpp
 	${CC} ${CFLAG} -c scanner.cpp
 parser.o: parser.h parser.cpp
 	${CC} ${CFLAG} -c parser.cpp
+node.o: node.h node.cpp
+	${CC} ${CFLAG} -c node.cpp
 clean:
 ifeq (${OS}, Windows_NT)
-	del hw5.exe *.o	
+	del hw6.exe *.o	
 else
-	rm hw5 *.o
+	rm hw6 *.o
 endif
 
