@@ -10,6 +10,7 @@ class Number : public Term
 public:
     Number(int v);
     Number(double v);
+    Number(std::string symbol);
     bool match(Term &term);
     std::string symbol() const;
 private:

@@ -1,5 +1,5 @@
 CC    = g++ 
-CFLAG = -Wall -g3 -std=gnu++14
+CFLAG = -Wall -g -std=gnu++14
 
 hw6: hw6.o term.o atom.o number.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o
 
@@ -9,7 +9,7 @@ else
 	${CC} ${CFLAG} -o hw6 hw6.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o -lgtest -lpthread
 endif
 
-hw6.o:hw6.cpp utParser.h
+hw6.o:hw6.cpp utParser.h 
 	${CC} ${CFLAG} -c hw6.cpp
 term.o:term.h term.cpp
 	${CC} ${CFLAG} -c term.cpp
@@ -33,18 +33,8 @@ node.o: node.h node.cpp
 	${CC} ${CFLAG} -c node.cpp
 clean:
 ifeq (${OS}, Windows_NT)
-<<<<<<< HEAD
 	del hw6.exe *.o	
 else
-	rm hw6 *.o
-=======
-ifneq ("$(wildcard hw5.exe)","") 
-	del hw5.exe *.o	
-endif
-else
-ifneq ("$(wildcard hw5)","") 
-	rm hw5 *.o	
-endif
->>>>>>> ff6f5dda5720ea126ebe9369d644ce9b732c89ca
+	rm hw6 *.o	
 endif
 

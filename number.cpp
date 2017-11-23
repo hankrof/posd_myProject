@@ -9,6 +9,12 @@ Number::Number(double v)
     ss << v;
     ss >> _symbol; 
 }
+
+Number::Number(std::string symbol)
+    : _symbol(symbol)
+{
+
+}
 bool Number::match(Term &term)
 {
     Variable *var = dynamic_cast<Variable*>(&term);

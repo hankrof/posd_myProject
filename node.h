@@ -1,6 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 #include "term.h"
+#include "global.h"
 enum Operators {SEMICOLON, COMMA, EQUALITY, TERM};
 class Node 
 {
@@ -14,4 +15,5 @@ public:
     Term         *term;
     Node         *left, *right;
 };
+void resetNode(Node *node);
 #endif

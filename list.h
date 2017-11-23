@@ -19,6 +19,7 @@ public:
     std::string symbol() const;
     std::string value() const;
     bool match(Term &term);
+    void reset();
 private:
     bool matchListDiffVar(List *list); 
     vector<Term*> _elements;

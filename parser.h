@@ -49,5 +49,7 @@ private:
     int _currentToken;
     Node *_exprRoot;
     void createTerms();
+    void generateExpTree();
+    void maintainSameTerms(Context *context, Node *node);
 };
 #endif

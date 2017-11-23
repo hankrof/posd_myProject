@@ -11,7 +11,9 @@ public:
     std::string value() const;
     std::string symbol() const;
     bool match(Term &term);
+    void reset();
     std::string const _symbol;
+    Variable& operator=(Variable const& var);
 private:
     void add_shared_var(Variable *var);
     void instantiate_shared_var(Term *_nvalue);

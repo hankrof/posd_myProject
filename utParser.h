@@ -1,13 +1,10 @@
 #ifndef UTPARSER_H
 #define UTPARSER_H
 
+#include <string>
+
 #include "parser.h"
 #include "scanner.h"
-#include "term.h"
-#include "list.h"
-#include "variable.h"
-#include "number.h"
-#include <iostream>
 
 class ParserTest : public ::testing::Test 
 {
@@ -17,29 +14,6 @@ protected:
         symtable.clear();
     }
 };
-
-void showNodes(std::vector<Node*> nodes)
-{
-    for(size_t i=0;i<nodes.size();i++)
-    {
-        switch(nodes[i]->payload)            
-        {
-            case TERM:
-                std::cout << nodes[i]->term->symbol();
-                break;
-            case SEMICOLON:
-                std::cout << ';';
-                break;
-            case COMMA:
-                std::cout << ',';
-                break;
-            case EQUALITY:
-                std::cout << '=';
-                break;
-        }
-    }
-    std::cout << std::endl;
-}
 
 TEST_F(ParserTest, createTerm_Var)
 {
@@ -74,6 +48,7 @@ TEST_F(ParserTest, createTerm_Struct)
 }
 
 TEST_F(ParserTest, createArgs)
+
 {
     Scanner scanner("1, X, tom");
     Parser parser(scanner);
@@ -97,11 +72,7 @@ TEST_F(ParserTest,ListOfTermsEmpty)
 TEST_F(ParserTest, createTerm_underscoredVar)
 
 {
-<<<<<<< HEAD
     Scanner scanner("_date");
-=======
-    Scanner scanner(" 12345,    tom");
->>>>>>> ff6f5dda5720ea126ebe9369d644ce9b732c89ca
     Parser parser(scanner);
     ASSERT_EQ("_date", parser.createTerm()->symbol());
 }
@@ -109,11 +80,7 @@ TEST_F(ParserTest, createTerm_underscoredVar)
 TEST_F(ParserTest,listofTermsTwoNumber)
 
 {
-<<<<<<< HEAD
     Scanner scanner("12345 , 68");
-=======
-    Scanner scanner("point(1, X, z(1,2,3))");
->>>>>>> ff6f5dda5720ea126ebe9369d644ce9b732c89ca
     Parser parser(scanner);
     parser.createTerms();
     vector<Term*> terms = parser.getTerms();
@@ -123,11 +90,7 @@ TEST_F(ParserTest,listofTermsTwoNumber)
 
 TEST_F(ParserTest, createTerm_StructWithoutArgs) 
 {
-<<<<<<< HEAD
     Scanner scanner("point()");
-=======
-    Scanner scanner(" 12345,    67");
->>>>>>> ff6f5dda5720ea126ebe9369d644ce9b732c89ca
     Parser parser(scanner);
     EXPECT_EQ("point()",parser.createTerm()->symbol());
 }
@@ -161,6 +124,7 @@ TEST_F( ParserTest, createTerm_StructWithStruct)
 }
 
 TEST_F(ParserTest, createTerm_nestedStruct)
+
 {
     Scanner scanner("s(s(1))");
     Parser parser(scanner);
@@ -225,12 +189,11 @@ TEST_F(ParserTest, createTerm_illeageTerm)
     Scanner scanner("[1,2)");
     Parser parser( scanner );
     try 
-    {
+{
         parser.createTerm();
         ASSERT_TRUE(false) << "It should throw a string; \"unexpected token\" as exception.";
-    }
-    catch (std::string exception) 
-    {
+    } catch (std::string exception) 
+{
         EXPECT_EQ(exception, std::string("unexpected token"));
     }
 }
@@ -278,7 +241,6 @@ TEST_F(ParserTest, OneMatching)
     EXPECT_TRUE(et->evaluate());
     EXPECT_EQ("1", terms[0]->value());
 }
-
 TEST_F(ParserTest, OneMatchingFalse) 
 {
     Scanner scanner("1=2.");
@@ -342,7 +304,7 @@ TEST_F(ParserTest, ThreeTermsMatching)
     EXPECT_EQ("3", terms[4]->value());
 
 }
-/*
+
 TEST_F(ParserTest, TwoVariableMatching2) 
 {
     Scanner scanner("X=1, X=Y.");
@@ -513,5 +475,4 @@ TEST_F(ParserTest, MatchingSuccess)
     EXPECT_EQ("2", terms[2]->value());
     EXPECT_EQ("s(s(2))", terms[4]->value());
 }
-*/
 #endif

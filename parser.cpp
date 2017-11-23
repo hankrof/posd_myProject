@@ -87,81 +87,13 @@ void Parser::matchings()
             _scanner.nextToken();
         }
     }
+    generateExpTree();
+    maintainSameTerms(new Context, _exprRoot);
 }
 
 Node* Parser::expressionTree()
 {
-    //        0      1         2     3
-    //SEMICOLON, COMMA, EQUALITY, TERM
-    int priority[] = {2, 3, 4}; 
-    Node *node;
-    std::vector<Node*> postfix;
-    std::stack<Node*> stk;
-    for(size_t i=0; i<_nodes.size(); i++)
-    {
-        node = _nodes[i]; 
-        if(node->payload == TERM)
-            postfix.push_back(node);
-        else //For future, if there adds the new operator. Use icp & isp
-        {
-            while(!stk.empty() && 
-                  priority[stk.top()->payload] >= priority[node->payload])
-            {
-                postfix.push_back(stk.top());
-                stk.pop();
-            }
-            stk.push(node);
-        }
-    }
-
-    while(!stk.empty())
-    {
-        postfix.push_back(stk.top());
-        stk.pop();
-    }
- 
-    int payload;
-    for(size_t i=0; i<postfix.size(); i++)
-    {
-        node    = postfix[i]; 
-        payload = node->payload;
-        if(payload == EQUALITY)
-        {
-            Node *n1, *n2; 
-            n1 = stk.top();
-            stk.pop();
-            n2 = stk.top();
-            stk.pop();
-
-            node->left  = n2;
-            node->right = n1;
-            n2->term->match(*n1->term);
-
-            stk.push(node);
-        }
-        else if(payload == COMMA)
-        {
-            Node *n1, *n2; 
-            n1 = stk.top();
-            stk.pop();
-            n2 = stk.top();
-            stk.pop();
-
-            node->left  = n2;
-            node->right = n1;
- 
-            stk.push(node);
-        }
-        else if(payload == TERM)
-        {
-            stk.push(node);
-        }
-    }
-
-    _exprRoot = stk.top();
-    stk.pop();
-
-    return _nodes.size() ? _exprRoot : nullptr;
+    return _exprRoot;
 }
 
 Term* Parser::list() 
@@ -174,7 +106,8 @@ Term* Parser::list()
         vector<Term *> args(_terms.begin() + startIndexOfListArgs, _terms.end());
         _terms.erase(_terms.begin() + startIndexOfListArgs, _terms.end());
         return new List(args);
-    } else 
+    }
+    else 
     {
         throw std::string("unexpected token");
     }
@@ -197,3 +130,102 @@ void Parser::createTerms()
     }
 }
 
+void Parser::generateExpTree()
+{
+//        0      1         2     3
+    //SEMICOLON, COMMA, EQUALITY, TERM
+    Node *node, *n1, *n2;
+    std::stack<Node*> term_stk, op_stk, stk; 
+    int priority[] = {2, 3, 4}; 
+    std::vector<Node*> prefix(_nodes.size());
+    int p = prefix.size() - 1;
+    for(int i=static_cast<int>(_nodes.size()-1); i>=0; i--)
+    {
+        node = _nodes[i]; 
+        if(node->payload == TERM)
+        {
+            term_stk.push(node);
+        }
+        else
+        {
+            while(!op_stk.empty() &&
+                   priority[op_stk.top()->payload] >= priority[node->payload])
+            {
+                if(!term_stk.empty())
+                {
+                    n2 = term_stk.top();
+                    term_stk.pop();
+                    n1 = term_stk.top();
+                    term_stk.pop();
+                    prefix[p--] = n1;
+                    prefix[p--] = n2;
+                }
+                prefix[p--] = op_stk.top();
+                op_stk.pop();
+            }
+            op_stk.push(node);
+        }
+    }
+    while(!op_stk.empty())
+    {
+        if(!term_stk.empty())
+        {
+            n2 = term_stk.top();
+            term_stk.pop();
+            n1 = term_stk.top();
+            term_stk.pop();
+            prefix[p--] = n1;
+            prefix[p--] = n2;
+        }
+        prefix[p--] = op_stk.top();
+        op_stk.pop();
+    }
+
+    int payload;
+    for(int i = static_cast<int>(prefix.size() - 1); i>=0; i--)
+    {
+        node    = prefix[i]; 
+        payload = node->payload;
+        if(payload != TERM)
+        {
+            n1 = stk.top();
+            stk.pop();
+            n2 = stk.top();
+            stk.pop();
+            node->left  = n1;
+            node->right = n2;
+        }
+        stk.push(node);
+    }  
+    _exprRoot = stk.top();
+    stk.pop();
+}
+
+void Parser::maintainSameTerms(Context *context, Node *node)
+{
+    if(node->payload == TERM)
+    {
+        Term *t;
+        if(termExist(context, node->term->symbol(), &t))
+        {
+            for(size_t i=0;i<_terms.size();i++)
+            {
+                if(node->term == _terms[i])
+                    _terms[i] = t;
+            }
+            node->term = t;
+        }
+        else
+        {
+            termAddToContext(context, *node->term);
+        }
+    }
+    if(node->left)
+        maintainSameTerms(context, node->left);
+    if(node->right)
+    {
+        if(node->payload == SEMICOLON)
+            context = new Context;    
+        maintainSameTerms(context, node->right);
+    }
+}

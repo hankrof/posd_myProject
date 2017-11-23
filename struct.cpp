@@ -53,4 +53,10 @@ bool Struct::match(Term &term)
         return var->match(*this);
     return symbol() == term.symbol();
 }
-
+void Struct::reset()
+{
+    for(size_t i=0;i<_args.size();i++)
+    {
+        _args[i]->reset();
+    }
+}

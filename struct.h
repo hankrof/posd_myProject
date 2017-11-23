@@ -15,6 +15,7 @@ public:
     std::string value() const;
     std::string symbol() const;
     bool match(Term &term);
+    void reset();
 private:
     Atom const _name;
     std::vector<Term *> _args;

@@ -16,9 +16,25 @@ bool Node::evaluate()
     if (payload == COMMA)
         return left->evaluate() && right->evaluate();
     else if (payload == SEMICOLON)
-        return left->evaluate() || right->evaluate();
+    {
+        //Boolean OR will shortcut.
+        //Use bitwise has the same effect, and the matching can be complete. 
+        return left->evaluate() | right->evaluate(); 
+    }
     else if (payload == EQUALITY)
+    {
         return left->term->match(*right->term);
+    }
     else
         return false;
+}
+
+void resetNode(Node *node)
+{
+    if(node->payload == TERM)
+        node->term->reset();
+    if(node->left)
+        resetNode(node->left);
+    if(node->right)
+        resetNode(node->right);
 }
