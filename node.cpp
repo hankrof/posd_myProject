@@ -29,12 +29,3 @@ bool Node::evaluate()
         return false;
 }
 
-void resetNode(Node *node)
-{
-    if(node->payload == TERM)
-        node->term->reset();
-    if(node->left)
-        resetNode(node->left);
-    if(node->right)
-        resetNode(node->right);
-}

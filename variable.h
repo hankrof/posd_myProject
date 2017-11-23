@@ -11,7 +11,6 @@ public:
     std::string value() const;
     std::string symbol() const;
     bool match(Term &term);
-    void reset();
     std::string const _symbol;
     Variable& operator=(Variable const& var);
 private:

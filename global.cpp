@@ -66,9 +66,7 @@ void termAddToContext(Context *context, Term &term)
             if(!termExist(context, t->symbol(), &t))
                 termAddToContext(context, *s->args(i));
             else
-            {
-                
-            }
+                s->setArgs(i, t);        
         }
     }
     else if(l)

@@ -101,8 +101,3 @@ bool List::matchListDiffVar(List *list)
     }
     return true;
 }
-void List::reset()
-{
-    for(size_t i=0;i<_elements.size();i++)
-        _elements[i]->reset();
-}

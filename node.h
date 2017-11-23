@@ -15,5 +15,4 @@ public:
     Term         *term;
     Node         *left, *right;
 };
-void resetNode(Node *node);
 #endif

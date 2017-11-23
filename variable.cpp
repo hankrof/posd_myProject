@@ -41,12 +41,6 @@ bool Variable::match(Term &term)
     }
     return _value->symbol() == term.symbol();
 }
-void Variable::reset()
-{
-    _value        = this;
-    _instantiated = false;
-    _sharedlist.clear();
-}
 void Variable::add_shared_var(Variable *var)
 {
     _sharedlist.push_back(var);

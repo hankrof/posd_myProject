@@ -8,6 +8,10 @@ Term * Struct::args(int index)
 {
     return _args[index];
 }
+void Struct::setArgs(int index, Term *term)
+{
+    _args[index] = term;
+}
 int Struct::arity() const
 {
     return _args.size();
@@ -52,11 +56,4 @@ bool Struct::match(Term &term)
     if(var)
         return var->match(*this);
     return symbol() == term.symbol();
-}
-void Struct::reset()
-{
-    for(size_t i=0;i<_args.size();i++)
-    {
-        _args[i]->reset();
-    }
 }
