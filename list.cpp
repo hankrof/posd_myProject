@@ -1,4 +1,5 @@
 #include "list.h"
+#include "iterator.h"
 List::List()
     : _elements() 
 {
@@ -101,3 +102,31 @@ bool List::matchListDiffVar(List *list)
     }
     return true;
 }
+int   List::arity()
+{
+    return _elements.size();
+}
+Term* List::args(int index)
+{
+    return _elements[index];
+}
+void  List::setArgs(int index, Term* term)
+{
+    _elements[index] = term;
+} 
+
+Iterator<Term*> *List::createIterator()
+{
+    return new ListIterator<Term*>(this);
+}
+
+Iterator<Term*> *List::createDFSIterator()
+{
+    return new DFSIterator<Term*>(this);
+}
+
+Iterator<Term*> *List::createBFSIterator()
+{
+    return new BFSIterator<Term*>(this);
+}
+

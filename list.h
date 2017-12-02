@@ -8,7 +8,8 @@
 #include <memory>
 
 using std::vector;
-
+template<class Item>
+class Iterator;
 class List : public Term
 {
 public:
@@ -19,6 +20,16 @@ public:
     std::string symbol() const;
     std::string value() const;
     bool match(Term &term);
+
+//These three functions are for parser when parsing the expression.
+    int   arity();
+    Term* args(int index);
+    void  setArgs(int index, Term* term); 
+
+    Iterator<Term*> *createIterator();
+    Iterator<Term*> *createDFSIterator();
+    Iterator<Term*> *createBFSIterator();
+
 private:
     bool matchListDiffVar(List *list); 
     vector<Term*> _elements;

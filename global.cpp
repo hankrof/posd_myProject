@@ -71,93 +71,16 @@ void termAddToContext(Context *context, Term &term)
     }
     else if(l)
     {
-        
+        for(int i=0;i<l->arity();i++) 
+        {
+            t = l->args(i);
+            if(!termExist(context, t->symbol(), &t))
+                termAddToContext(context, *l->args(i));
+            else
+                l->setArgs(i, t);        
+        }
     }
     context->push_back(std::pair<std::string, Term*>(term.symbol(), &term));
-}
-
-void resetTerm(Term *term)
-{
-    /*
-    Atom   *atom;
-    Struct *strt;
-    List   *list;
-    Number *number;
-    Variable *variable;
-    atom     = dynamic_cast<Atom*>    (term);
-    strt     = dynamic_cast<Struct*>  (term);
-    list     = dynamic_cast<List*>    (term);
-    number   = dynamic_cast<Number*>  (term);
-    variable = dynamic_cast<Variable*>(term);
-    if(atom)
-    {
-        *term = Atom(atom->symbol());
-    }
-    else if(strt)
-    {
-        Term *t;
-        for(int i=0;i<strt->arity();i++)
-        {
-            if((t = strt->args(i)))
-                resetTerm(t);
-        }
-    }
-    else if(list)
-    {
-        //not implemented yet.
-    }
-    else if(number)
-    {
-        *term = Number(number->symbol());
-    }
-    else if(variable)
-        *variable = Variable(variable->symbol());
-    */
-}
-
-Term* cloneAndResetTerm(Term *term)
-{
-    Atom   *atom;
-    Struct *strt;
-    List   *list;
-    Number *number;
-    Variable *variable;
-    atom     = dynamic_cast<Atom*>    (term);
-    strt     = dynamic_cast<Struct*>  (term);
-    list     = dynamic_cast<List*>    (term);
-    number   = dynamic_cast<Number*>  (term);
-    variable = dynamic_cast<Variable*>(term);
-    if(atom)
-        return atom;
-    else if(strt)
-    {
-        Term *t;
-        vector<Term*> struct_args;
-        for(int i=0;i<strt->arity();i++)
-        {
-            if((t = strt->args(i)))
-            {
-                t = cloneAndResetTerm(t);
-                struct_args.push_back(t);
-            }
-            else
-                return nullptr;
-        }
-        return new Struct(strt->name(), struct_args);
-    }
-    else if(list)
-    {
-        //not implemented yet.
-        return nullptr;
-    }
-    else if(number)
-        return number;
-    else if(variable)
-    {
-        return new Variable(variable->symbol());
-    }
-    else
-        return nullptr;
 }
 
 void printSymbolTable()

@@ -25,7 +25,5 @@ bool  symbolExist(std::string s, int & val);
 bool  termExist(Context *context, std::string s, Term **term);
 //void  termAddToContext(std::vector<std::pair<std::string, Term*>> context, Term &term);
 void  termAddToContext(Context *context, Term &term);
-void  resetTerm(Term *term);
-Term* cloneAndResetTerm(Term *term);
 void  printSymbolTable();
 #endif

@@ -1,16 +1,16 @@
 CC    = g++ 
 CFLAG = -Wall -g -std=gnu++14
 
-hw6: hw6.o term.o atom.o number.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o
+hw7: hw7.o term.o atom.o number.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o iterator.h
 
 ifeq (${OS}, Windows_NT)
-	${CC} ${CFLAG} -o hw6.exe hw6.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o -lgtest
+	${CC} ${CFLAG} -o hw7.exe hw7.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o -lgtest
 else
-	${CC} ${CFLAG} -o hw6 hw6.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o -lgtest -lpthread
+	${CC} ${CFLAG} -o hw7 hw7.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o -lgtest -lpthread
 endif
 
-hw6.o:hw6.cpp utParser.h 
-	${CC} ${CFLAG} -c hw6.cpp
+hw7.o:hw7.cpp utIterator.h
+	${CC} ${CFLAG} -c hw7.cpp
 term.o:term.h term.cpp
 	${CC} ${CFLAG} -c term.cpp
 atom.o:atom.h atom.cpp
@@ -33,8 +33,8 @@ node.o: node.h node.cpp
 	${CC} ${CFLAG} -c node.cpp
 clean:
 ifeq (${OS}, Windows_NT)
-	del hw6.exe *.o	
+	del hw7.exe *.o	
 else
-	rm hw6 *.o	
+	rm hw7 *.o	
 endif
 
