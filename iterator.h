@@ -24,7 +24,7 @@ template<class Item>
 class NullIterator :public Iterator<Item>
 {
 public:
-    NullIterator(Item n){}
+    friend class Term;
     void first(){}
     void next(){}
     Item currentItem() const
@@ -35,6 +35,8 @@ public:
     {
         return true;
     }
+private:
+    NullIterator(Item n){}
 };
 
 template<class Item>
@@ -71,8 +73,7 @@ template<class Item>
 class ListIterator :public Iterator<Item>
 {
 public:
-    ListIterator(List *list): _index(0), _list(list) {}
-
+    friend class List;
     void first() {
         _index = 0;
     }
@@ -89,6 +90,7 @@ public:
         _index++;
     }
 private:
+    ListIterator(List *list): _index(0), _list(list) {}
     int _index;
     List* _list;
 };
@@ -97,10 +99,9 @@ template<class Item>
 class DFSIterator : public Iterator<Item>
 {
 public:
-    DFSIterator(Item term):_term(term),_index(0)
-    {
-
-    }
+    friend class Term; 
+    friend class Struct; 
+    friend class List; 
     void first()
     {
         _index = 0;
@@ -142,6 +143,10 @@ public:
         return _index >= (int)_dfsTerms.size();
     }
 private:
+    DFSIterator(Item term):_term(term),_index(0)
+    {
+
+    }
     std::vector<Item> _dfsTerms;
     Item _term;
     int _index;
@@ -151,10 +156,9 @@ template<class Item>
 class BFSIterator : public Iterator<Item>
 {
 public:
-    BFSIterator(Item term):_term(term),_index(0)
-    {
-
-    }
+    friend class Term;  
+    friend class Struct; 
+    friend class List; 
     void first()
     {
         Item term;
@@ -189,8 +193,11 @@ public:
         return _index >= (int)_bfsTerms.size();
     }
 
-
 private:
+    BFSIterator(Item term):_term(term),_index(0)
+    {
+
+    }
     std::vector<Item> _bfsTerms;
     Item _term;
     int _index;
