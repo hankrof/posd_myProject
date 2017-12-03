@@ -31,6 +31,7 @@ parser.o: parser.h parser.cpp
 	${CC} ${CFLAG} -c parser.cpp
 node.o: node.h node.cpp
 	${CC} ${CFLAG} -c node.cpp
+
 clean:
 ifeq (${OS}, Windows_NT)
 	del hw7.exe *.o	
