@@ -1,4 +1,5 @@
 #include "global.h"
+#include "iterator.h"
 std::vector<std::pair<std::string, int>> symtable;
 bool isSpecialCh(char c)
 {
@@ -55,32 +56,19 @@ bool termExist(Context *context, std::string s, Term **term)
 
 void termAddToContext(Context *context, Term &term)
 {
-    Struct *s = dynamic_cast<Struct*>(&term);
-    List   *l = dynamic_cast<List*>(&term);    
-    Term   *t;
-    if(s)
+    int i;
+    Term* t;
+    Iterator<Term*> *it = term.createIterator();
+    i = 0;
+    for(it->first();!it->isDone();i++, it->next())
     {
-        for(int i=0;i<s->arity();i++) 
-        {
-            t = s->args(i);
-            if(!termExist(context, t->symbol(), &t))
-                termAddToContext(context, *s->args(i));
-            else
-                s->setArgs(i, t);        
-        }
+        t = it->currentItem();
+        if(!termExist(context, t->symbol(), &t))
+            termAddToContext(context, *it->currentItem());
+        else
+            term.setArg(i, t); 
     }
-    else if(l)
-    {
-        for(int i=0;i<l->arity();i++) 
-        {
-            t = l->args(i);
-            if(!termExist(context, t->symbol(), &t))
-                termAddToContext(context, *l->args(i));
-            else
-                l->setArgs(i, t);        
-        }
-    }
-    context->push_back(std::pair<std::string, Term*>(term.symbol(), &term));
+    context->push_back(std::pair<std::string, Term*>(term.symbol(), &term)); 
 }
 
 void printSymbolTable()

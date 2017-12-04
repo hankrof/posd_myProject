@@ -9,7 +9,7 @@ Term * Struct::args(int index)
 {
     return _args[index];
 }
-void Struct::setArgs(int index, Term *term)
+void Struct::setArg(int index, Term *term)
 {
     _args[index] = term;
 }

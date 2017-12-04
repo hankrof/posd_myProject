@@ -11,7 +11,7 @@ class Struct : public Term
 public:
     Struct(Atom const &name, std::vector<Term *> args);
     Term * args(int index);
-    void setArgs(int index, Term* term); //For parser.
+    void setArg(int index, Term* term); //For parser.
     int arity() const;
     Atom const& name() const;
     std::string value() const;

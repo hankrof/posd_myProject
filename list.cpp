@@ -110,7 +110,7 @@ Term* List::args(int index)
 {
     return _elements[index];
 }
-void  List::setArgs(int index, Term* term)
+void  List::setArg(int index, Term* term)
 {
     _elements[index] = term;
 } 

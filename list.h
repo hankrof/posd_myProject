@@ -24,7 +24,7 @@ public:
 //These three functions are for parser when parsing the expression.
     int   arity();
     Term* args(int index);
-    void  setArgs(int index, Term* term); 
+    void  setArg(int index, Term* term); 
 
     Iterator<Term*> *createIterator();
     Iterator<Term*> *createDFSIterator();
