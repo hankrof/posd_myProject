@@ -1,7 +1,7 @@
 #include "list.h"
 #include "iterator.h"
 List::List()
-    : _elements() 
+    : _elements()
 {
 
 }
@@ -39,7 +39,7 @@ std::string List::value() const
         sym_name += ", ";
     }
     sym_name += _elements[_elements.size() - 1]->value();
-    sym_name += ']'; 
+    sym_name += ']';
     return sym_name;
 }
 std::string List::symbol() const
@@ -54,7 +54,7 @@ std::string List::symbol() const
         sym_name += ", ";
     }
     sym_name += _elements[_elements.size() - 1]->symbol();
-    sym_name += ']'; 
+    sym_name += ']';
     return sym_name;
 }
 bool List::match(Term &term)
@@ -69,7 +69,7 @@ bool List::match(Term &term)
 }
 bool List::matchListDiffVar(List *list)
 {
-    Variable *var1, *var2; 
+    Variable *var1, *var2;
     if(list->_elements.size() != _elements.size())
         return false;
     for(size_t i=0; i<_elements.size(); i++)
@@ -94,7 +94,7 @@ bool List::matchListDiffVar(List *list)
             if(!ret)
                 return false;
         }
-        else if(!var1 && !var2 && 
+        else if(!var1 && !var2 &&
            _elements[i]->symbol() != list->_elements[i]->symbol())
         {
             return false;
@@ -113,7 +113,7 @@ Term* List::args(int index)
 void  List::setArg(int index, Term* term)
 {
     _elements[index] = term;
-} 
+}
 
 Iterator<Term*> *List::createIterator()
 {
@@ -129,4 +129,3 @@ Iterator<Term*> *List::createBFSIterator()
 {
     return new BFSIterator<Term*>(this);
 }
-

@@ -1,7 +1,7 @@
 #include "struct.h"
 #include "iterator.h"
 Struct::Struct(Atom const &name, std::vector<Term *> args)
-    : _name(name), _args(args) 
+    : _name(name), _args(args)
 {
 
 }
@@ -33,7 +33,7 @@ std::string Struct::value() const
         sym_name += ", ";
     }
     sym_name += _args[_args.size() - 1]->value();
-    sym_name += ')'; 
+    sym_name += ')';
     return sym_name;
 }
 std::string Struct::symbol() const
@@ -48,7 +48,7 @@ std::string Struct::symbol() const
         sym_name += ", ";
     }
     sym_name += _args[_args.size() - 1]->symbol();
-    sym_name += ')'; 
+    sym_name += ')';
     return sym_name;
 }
 bool Struct::match(Term &term)
@@ -73,4 +73,3 @@ Iterator<Term*> *Struct::createBFSIterator()
 {
     return new BFSIterator<Term*>(this);
 }
-

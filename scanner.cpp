@@ -25,7 +25,7 @@ int Scanner::nextToken()
         processToken<ATOM>(s);
         return ATOM;
     }
-    else if (isSpecialCh(currentChar()))
+    else if (isSpecialCh(currentChar()) && position() < static_cast<int>(buffer.length()) - 1)
     {
         std::string s = extractAtomSC();
         processToken<ATOMSC>(s);
@@ -82,7 +82,7 @@ int Scanner::extractNumber()
 std::string Scanner::extractAtom()
 {
     int posBegin = position();
-    for (;isalnum(buffer[pos]); ++pos);
+    for (;isalnum(buffer[pos]) || buffer[pos] == '_'; ++pos);
     return buffer.substr(posBegin, pos-posBegin);
 }
 
@@ -104,4 +104,3 @@ char Scanner::extractChar()
 {
     return buffer[pos++];
 }
-

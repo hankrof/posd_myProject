@@ -1,16 +1,28 @@
-CC    = g++ 
-CFLAG = -Wall -g -std=gnu++14
+CC    = g++
+CFLAG = -Wall -g3 -std=gnu++14
 
-hw7: hw7.o term.o atom.o number.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o iterator.h
-
+all: shell hw8
+shell: mainShell.o term.o atom.o number.o struct.o variable.o number.o list.o\
+	global.o parser.o scanner.o	shell.o
 ifeq (${OS}, Windows_NT)
-	${CC} ${CFLAG} -o hw7.exe hw7.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o -lgtest
+	${CC} ${CFLAG} -o shell.exe mainShell.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o shell.o -lgtest
 else
-	${CC} ${CFLAG} -o hw7 hw7.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o node.o -lgtest -lpthread
+	${CC} ${CFLAG} -o shell mainShell.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o shell.o -lgtest -lpthread
 endif
 
-hw7.o:hw7.cpp utIterator.h
-	${CC} ${CFLAG} -c hw7.cpp
+hw8: hw8.o term.o atom.o number.o struct.o variable.o number.o list.o\
+	global.o parser.o scanner.o	shell.o exp.h
+
+ifeq (${OS}, Windows_NT)
+	${CC} ${CFLAG} -o hw8.exe hw8.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o shell.o -lgtest
+else
+	${CC} ${CFLAG} -o hw8 hw8.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o shell.o -lgtest -lpthread
+endif
+
+mainShell.o:mainShell.cpp exp.h
+	${CC} ${CFLAG} -c mainShell.cpp
+hw8.o:hw8.cpp expression.h exception.h exp.h
+	${CC} ${CFLAG} -c hw8.cpp
 term.o:term.h term.cpp
 	${CC} ${CFLAG} -c term.cpp
 atom.o:atom.h atom.cpp
@@ -29,14 +41,11 @@ scanner.o: scanner.h scanner.cpp
 	${CC} ${CFLAG} -c scanner.cpp
 parser.o: parser.h parser.cpp
 	${CC} ${CFLAG} -c parser.cpp
-node.o: node.h node.cpp
-	${CC} ${CFLAG} -c node.cpp
-
+shell.o: shell.h shell.cpp
+	${CC} ${CFLAG} -c shell.cpp
 clean:
 ifeq (${OS}, Windows_NT)
-	del hw7.exe *.o	
+	del hw8.exe *.o
 else
-	rm hw7 *.o	
+	rm shell hw8 *.o
 endif
-
-

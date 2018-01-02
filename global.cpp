@@ -1,12 +1,14 @@
 #include "global.h"
 #include "iterator.h"
 std::vector<std::pair<std::string, int>> symtable;
+Context _context;
 bool isSpecialCh(char c)
 {
   return c == '+'
       // || c == '=' // ... the matching operator
          || c == '-'
          || c == '*'
+         || c == '_'
          || c == '/'
          || c == '<'
          || c == '>'
@@ -37,7 +39,7 @@ bool symbolExist(std::string s, int & val)
         val = it - symtable.begin();
     return found;
 }
-    
+
 bool termExist(Context *context, std::string s, Term **term)
 {
     bool found = false;
@@ -66,9 +68,9 @@ void termAddToContext(Context *context, Term &term)
         if(!termExist(context, t->symbol(), &t))
             termAddToContext(context, *it->currentItem());
         else
-            term.setArg(i, t); 
+            term.setArg(i, t);
     }
-    context->push_back(std::pair<std::string, Term*>(term.symbol(), &term)); 
+    context->push_back(std::pair<std::string, Term*>(term.symbol(), &term));
 }
 
 void printSymbolTable()

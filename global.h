@@ -11,7 +11,7 @@
 #include "list.h"
 #include "number.h"
 
-#define NONE       (-1) 
+#define NONE       (-1)
 #define EOS        (0)
 #define NUMBER     (256)
 #define ATOM       (257)
@@ -19,7 +19,7 @@
 #define VAR        (259)
 typedef std::vector<std::pair<std::string, Term*>> Context;
 extern std::vector<std::pair<std::string, int>>   symtable;
-
+extern Context _context;
 bool  isSpecialCh(char c);
 bool  symbolExist(std::string s, int & val);
 bool  termExist(Context *context, std::string s, Term **term);

@@ -1,55 +1,48 @@
 #ifndef PARSER_H
 #define PARSER_H
+#include <string>
+using std::string;
 
 #include "atom.h"
 #include "variable.h"
 #include "global.h"
 #include "scanner.h"
-#include "number.h"
 #include "struct.h"
-#include "node.h"
+#include "list.h"
+#include "exp.h"
 #include <stack>
 #ifndef FRIEND_TEST
     #include <gtest/gtest_prod.h>
 #endif
-/*
-BNF Rule:
+using std::stack;
 
-
-    TermExp   -> atom | number | var | struct | list
-    TermsExp  -> term rest | e 
-    rest      -> ',' term rest | e
-    MatchExp  -> term & term
-    AtomExp   -> Atom
-    NumberExp -> Number
-    VarExp    -> Var
-    StructExp -> atom '(' terms ')'
-    ListExp   -> '[' terms ']'
-*/
-
-//Interpreter Pattern
 class Parser
 {
 public:
-    Parser(Scanner const& scanner);
-    Term* createTerm();
-    Term* structure();
-    void  matchings();
-    Node* expressionTree();
-    Term* list();
-    std::vector<Term*>& getTerms();
+  Parser(Scanner scanner);
+  Term* createTerm();
+  Term * structure();
+  Term * list();
+  vector<Term *> & getTerms();
+  void buildExpression();
+  void restDisjunctionMatch();
+  void disjunctionMatch();
+  void restConjunctionMatch();
+  void conjunctionMatch();
+  Exp* getExpressionTree();
+  std::vector<Exp*> getTreeContext();
 private:
-    FRIEND_TEST(ParserTest, createArgs);
-    FRIEND_TEST(ParserTest, ListOfTermsEmpty);
-    FRIEND_TEST(ParserTest, listofTermsTwoNumber);
-    FRIEND_TEST(ParserTest, createTerm_nestedStruct3);
-    vector<Term*> _terms;
-    vector<Node*> _nodes;
-    Scanner _scanner;
-    int _currentToken;
-    Node *_exprRoot;
-    void createTerms();
-    void generateExpTree();
-    void maintainSameTerms(Context *context, Node *node);
+  FRIEND_TEST(ParserTest, createArgs);
+  FRIEND_TEST(ParserTest, ListOfTermsEmpty);
+  FRIEND_TEST(ParserTest, listofTermsTwoNumber);
+  FRIEND_TEST(ParserTest, createTerm_nestedStruct3);
+  FRIEND_TEST(ParserTest, createTerms);
+  void createTerms();
+  Scanner _scanner;
+  vector<Term *> _terms;
+  std::vector<Exp*> _context;
+  int _currentToken;
+  //MatchExp* _root;
+  stack<Exp*> _expStack;
 };
 #endif
