@@ -6,27 +6,37 @@ int main(int argc, char **argv)
   PrologShell shell;
   while(1)
   {
-    char c;
+    bool exe = false;
     std::string input;
+    std::string executedString;
     input.clear();
     cout << "?- ";
-    while((c = getchar()))
+    while(!exe)
     {
-      if(!isspace(c))
-        input.push_back(c);
-      if(c == '\n')
-        cout << "|   ";
-      if(c == '.')
+      getline(cin,input);
+      if(input.empty())
       {
-        getchar(); //pop the final '\n'
-        break;
+        cout << "?- ";
+        continue;
       }
+      for(char c : input)
+      {
+        if(!isspace(c))
+          executedString.push_back(c);
+        if(c == '.')
+        {
+          exe = true;
+          break;
+        }
+      }
+      if(!exe)
+        cout << "|   ";
     }
     if(input == "halt.")
       break;
     try
     {
-      std::cout << shell.execute(input) << std::endl;
+      std::cout << shell.execute(executedString) << std::endl;
     }
     catch(std::string s)
     {
