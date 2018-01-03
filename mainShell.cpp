@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     std::string input;
     input.clear();
     cout << "?- ";
-    while(c = getchar())
+    while((c = getchar()))
     {
       if(!isspace(c))
         input.push_back(c);

@@ -3,20 +3,22 @@ CFLAG = -Wall -g3 -std=gnu++14
 
 all: shell hw8
 shell: mainShell.o term.o atom.o number.o struct.o variable.o number.o list.o\
-	global.o parser.o scanner.o	shell.o
+	global.o parser.o scanner.o	shell.o exp.o
 ifeq (${OS}, Windows_NT)
-	${CC} ${CFLAG} -o shell.exe mainShell.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o shell.o -lgtest
+	${CC} ${CFLAG} -o shell.exe mainShell.o term.o atom.o struct.o variable.o number.o\
+	 list.o global.o parser.o scanner.o shell.o exp.o -lgtest
 else
-	${CC} ${CFLAG} -o shell mainShell.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o shell.o -lgtest -lpthread
+	${CC} ${CFLAG} -o shell mainShell.o term.o atom.o struct.o variable.o number.o\
+	 list.o global.o parser.o scanner.o shell.o exp.o -lgtest -lpthread
 endif
 
 hw8: hw8.o term.o atom.o number.o struct.o variable.o number.o list.o\
-	global.o parser.o scanner.o	shell.o exp.h
+	 global.o parser.o scanner.o	shell.o exp.o
 
 ifeq (${OS}, Windows_NT)
-	${CC} ${CFLAG} -o hw8.exe hw8.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o shell.o -lgtest
+	${CC} ${CFLAG} -o hw8.exe hw8.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o shell.o exp.o -lgtest
 else
-	${CC} ${CFLAG} -o hw8 hw8.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o shell.o -lgtest -lpthread
+	${CC} ${CFLAG} -o hw8 hw8.o term.o atom.o struct.o variable.o number.o list.o global.o parser.o scanner.o shell.o exp.o -lgtest -lpthread
 endif
 
 mainShell.o:mainShell.cpp exp.h
@@ -43,6 +45,8 @@ parser.o: parser.h parser.cpp
 	${CC} ${CFLAG} -c parser.cpp
 shell.o: shell.h shell.cpp
 	${CC} ${CFLAG} -c shell.cpp
+exp.o: exp.h exp.cpp
+	${CC} ${CFLAG} -c exp.cpp
 clean:
 ifeq (${OS}, Windows_NT)
 	del hw8.exe *.o

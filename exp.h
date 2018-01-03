@@ -4,7 +4,8 @@
 #include "atom.h"
 #include "global.h"
 #include <set>
-
+std::vector<std::string> expStringToArray(std::string s);
+std::string subSame(std::string s1, std::string s2);
 class Exp {
 public:
   virtual bool evaluate() = 0;
@@ -63,7 +64,16 @@ public:
       return _right->symbol();
     if(_right->symbol() == "true")
       return _left->symbol();
-    return _left->symbol() + ", " + _right->symbol();
+    // return _left->symbol() + ", " + _right->symbol();
+    std::string o = subSame(_left->symbol(), _right->symbol());
+    std::string a = _left->symbol() + ", " + _right->symbol();
+    if(o.empty())
+      return a;
+    else if(o.length() < a.length())
+      return o;
+    else
+      return a;
+    // return subSame(_left->symbol(), _right->symbol());
   }
 
 private:
